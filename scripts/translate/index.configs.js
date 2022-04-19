@@ -8,33 +8,20 @@ module.exports = {
     },
     translates: [  //提取转译规则
       {
-        match: () => /"##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        match: () => /["']##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+["']|/gi,
         extract: () => `app.$tt('$key','[$value]')`,
         valueFormat: () => /##(.*)/gi,
       },
       {
-        match: () => /'##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
-        extract: () => `app.$tt("$key","[$value]")`,
-        valueFormat: () => /##(.*)/gi,
-      },
-      {
-        match: () => /"#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        match: () => /['"]#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+['"]|/gi,
         extract: () => `this.$tt('$key','[$value]')`,
         valueFormat: () => /#(.*)/gi,
       },
+     
       {
-        match: () => /'#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
-        extract: () => `this.$tt("$key","[$value]")`,
-        valueFormat: () => /#(.*)/gi,
-      },
-      {
-        match: () => /'[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
+        match: () => /['"][\u4e00-\u9fa5，！~【】a-zA-Z0-9]+['"]|/gi,
         extract: () => `$tt("$key","[$value]")`,
-      },
-      {
-        match: () => /"[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
-        extract: () => `$tt('$key','[$value]')`,
-      },
+      }
     ],
 
     translateds: [  //提取已经转译文件匹配文件写入到语言包

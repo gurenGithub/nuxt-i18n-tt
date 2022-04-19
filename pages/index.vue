@@ -10,6 +10,8 @@
 
     <span>{{ $tt("1D6FD11E96FBC293B9CEE1ADB9647FBA", "[测试完3]") }}</span>
     <span>{{ $tt("669C7B7E8929B4D732D4678AFF4AE5B9", "[测试完4]") }}</span>
+
+    <span>{{ $tt("EA2258F0EDE2A9B7C5F7B13D8589CBA9", "[测试66]") }}</span>
     <Languages />
   </div>
 </template>
@@ -21,6 +23,8 @@ export default {
   name: "IndexPage",
 
   data() {
+    let test = this.$tt("6B701C1E92FB5CD8E15003074C7589AE", "[测试3233]");
+    let test2 = this.$tt("076E62B9F815AE7CE4241A54FDC58CF6", "[测试3333]");
     return {
       keywords: this.$tt("4F21B5B1E34E9E554A92B112B13A3661", "[关键字]"),
     };

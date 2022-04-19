@@ -48,33 +48,20 @@ module.exports = {
     },
     translates: [  //提取转译规则
       {
-        match: () => /"##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        match: () => /["']##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+["']|/gi,
         extract: () => `app.$tt('$key','[$value]')`,
         valueFormat: () => /##(.*)/gi,
       },
       {
-        match: () => /'##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
-        extract: () => `app.$tt("$key","[$value]")`,
-        valueFormat: () => /##(.*)/gi,
-      },
-      {
-        match: () => /"#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        match: () => /['"]#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+['"]|/gi,
         extract: () => `this.$tt('$key','[$value]')`,
         valueFormat: () => /#(.*)/gi,
       },
+     
       {
-        match: () => /'#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
-        extract: () => `this.$tt("$key","[$value]")`,
-        valueFormat: () => /#(.*)/gi,
-      },
-      {
-        match: () => /'[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
+        match: () => /['"][\u4e00-\u9fa5，！~【】a-zA-Z0-9]+['"]|/gi,
         extract: () => `$tt("$key","[$value]")`,
-      },
-      {
-        match: () => /"[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
-        extract: () => `$tt('$key','[$value]')`,
-      },
+      }
     ],
 
     translateds: [  //提取已经转译文件匹配文件写入到语言包
@@ -90,6 +77,7 @@ module.exports = {
     ],
   },
 };
+
 
 ```
 
@@ -164,8 +152,9 @@ export default function({ isHMR, app, store, route, params, error, redirect }) {
 ### `store/index.js`
 
 存储当前环境变量
- ```javascript
- import { getLocales, getLocale } from "@/locales/index";
+````javascript
+
+import { getLocales, getLocale } from "@/locales/index";
 export const state = () => ({
   locales: getLocales(),
   locale: getLocale(), //current locale
@@ -191,7 +180,7 @@ export const actions = {
   async nuxtServerInit({ commit }, { req, $axios, app }) {},
 };
 
- ```
+````
 
  ### `scripts`
   提供转换脚本与建当前pages复制一份多语言路由
@@ -203,10 +192,10 @@ export const actions = {
 locale配置当前语言
 locales由npm run translate 进行反写，不需要对其进行设置
 
-```javascript
+````javascript
 {
   "locales": ["en", "zh-CN"],
   "locale": "en"
 }
 
-```
+````
