@@ -31,6 +31,8 @@ export default {
   },
 
   async asyncData({ app }) {
+
+    let test222=app.$tt('22DD11535AB64AB35E5CED815F89E7E0','[测试100]');
     return { title: app.$tt("7F08551E8E064C8435F9C2548D12DCBA", "[测试]") };
   },
 };
