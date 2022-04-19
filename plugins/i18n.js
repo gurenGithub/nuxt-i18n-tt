@@ -19,14 +19,14 @@ export default ({ app, store }, inject) => {
     let lang = languages[store.state.locale || configs.locale];
 
     if (!lang) {
-      console.log(`nuxt-i18n  not found ${current} `);
+      console.log(`nuxt-i18n-tt  not found ${current} `);
 
       return key;
     }
 
     let _t = lang[key];
     if (!_t) {
-      console.log(`nuxt-i18n  ${current} not found ${key}`);
+      console.log(`nuxt-i18n-tt  ${current} not found ${key}`);
 
       return key;
     }
