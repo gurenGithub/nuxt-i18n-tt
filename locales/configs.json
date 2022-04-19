@@ -1,1 +1,4 @@
-{"locales":["en","zh-CN"],"locale":"en"}
+{
+  "locales": ["en", "zh-CN"],
+  "locale": "en"
+}

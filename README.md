@@ -197,4 +197,16 @@ export const actions = {
   提供转换脚本与建当前pages复制一份多语言路由
   
 ### `locales`
-存储语言包文件，有些文件由npm run translate 命令生成，主要不要覆盖
+存储语言包文件，有些文件由npm run translate 命令生成，注意覆盖情况
+
+### `locales/configs.json`
+locale配置当前语言
+locales由npm run translate 进行反写，不需要对其进行设置
+
+```javascript
+{
+  "locales": ["en", "zh-CN"],
+  "locale": "en"
+}
+
+```
