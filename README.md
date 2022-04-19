@@ -15,55 +15,79 @@ $ yarn start
 
 # generate static project
 $ yarn generate
+
+#对pages,components进行文字提取到locales/lang目录
+npm run translate
+
+#生成多语言路由
+npm run generate-routes
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+配置规则在scripts/tranlaste/index.configs.js
 
-## Special Directories
+##  app.$tt()
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+"##你好"会替换成app.$tt('30B35E76205FD634A0B8D98AB4D3414B','[你好]')
 
-### `assets`
+## this.$tt()
+"#你好"会替换成this.$tt('30B35E76205FD634A0B8D98AB4D3414B','[你好]')
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+## $tt()
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+"你好"会替换成$tt('30B35E76205FD634A0B8D98AB4D3414B','[你好]')
 
-### `components`
+## 配置规则
+```javascript
+module.exports = {
+  translates: [{ dir: "./../../pages", reg: "**/**.vue" }],
+  locales: ["en", "zh-CN"],
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+  regs: {
+    test(obj) {
+      return /.*[\u4e00-\u9fa5]+.*$/.test(obj);
+    },
+    translates: [
+      {
+        match: () => /"##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        extract: () => `app.$tt('$key','[$value]')`,
+        valueFormat: () => /##(.*)/gi,
+      },
+      {
+        match: () => /'##[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
+        extract: () => `app.$tt("$key","[$value]")`,
+        valueFormat: () => /##(.*)/gi,
+      },
+      {
+        match: () => /"#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        extract: () => `this.$tt('$key','[$value]')`,
+        valueFormat: () => /#(.*)/gi,
+      },
+      {
+        match: () => /'#[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
+        extract: () => `this.$tt("$key","[$value]")`,
+        valueFormat: () => /#(.*)/gi,
+      },
+      {
+        match: () => /'[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+'|/gi,
+        extract: () => `$tt("$key","[$value]")`,
+      },
+      {
+        match: () => /"[\u4e00-\u9fa5，！~【】a-zA-Z0-9]+"|/gi,
+        extract: () => `$tt('$key','[$value]')`,
+      },
+    ],
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+    translateds: [
+      {
+        match() {
+          return /\$tt\(['"](\w+)['"](,|, )['"]\[([\u4e00-\u9fa5，！~【】a-zA-Z]+)\]['"]\)/gi;
+        },
 
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+        extract() {
+          return /["'](.*)["']([,\s\S]+)['"]\[([^\]]*)\]['"]\)/gi;
+        },
+      },
+    ],
+  },
+};
+```
